@@ -31,10 +31,6 @@ app.disable('x-powered-by')
 
 //  Todos los recursos que sean MOVIES se identifican con /movies
 app.get('/movies', (req, res) => {
-  const origin = req.header('origin')
-  if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
-    res.header('Access-Control-Allow-Origin', origin)
-  }
   const { genre } = req.query
   if (genre) {
     const filteredMovies = movies.filter(
@@ -70,10 +66,6 @@ app.post('/movies', (req, res) => {
 })
 
 app.delete('/movies/:id', (req, res) => {
-  const origin = req.header('origin')
-  if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
-    res.header('Access-Control-Allow-Origin', origin)
-  }
   const { id } = req.params
   const movieIndex = movies.findIndex(movie => movie.id === id)
 
@@ -110,14 +102,6 @@ app.patch('/movies/:id', (req, res) => {
   return res.json(updateMovie)
 })
 
-app.options('/movies/:id', (req, res) => {
-  const origin = req.header('origin')
-  if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
-    res.header('Access-Control-Allow-Origin', origin)
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
-  }
-  res.send(200)
-})
 
 const PORT = process.env.PORT ?? 1234
 
